@@ -1,0 +1,28 @@
+/* Gunakan flexbox untuk body agar footer selalu berada di bawah */
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Pastikan konten utama tumbuh untuk memenuhi ruang yang ada */
+.content {
+    flex-grow: 1;
+}
+
+/* Atur footer agar berada di bawah halaman */
+footer {
+    background-color: #dc3545;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+/* Atur tampilan untuk banner agar lebih menarik */
+.container.mt-5 img {
+    max-width: 100%;
+    height: auto;
+}
