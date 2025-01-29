@@ -3,39 +3,124 @@ const knowledgeBase = {
         {
             id: 'R1',
             conditions: {
-                indikator_injeksi: 'ya',
-                mesin_sulit: 'ya',
-                bunyi_aneh: 'tidak',
-                asap_knalpot: 'tidak',
-                mati_mendadak: 'tidak'
+                terendam_air: 'ya',
+                lampu_mati: 'ya',
+                suara_aneh: 'tidak',
+                sulit_dinyalakan: 'ya',
+                rem_licin: 'tidak'
             },
-            diagnosis: 'Masalah pada sistem injeksi bahan bakar',
-            solution: 'Periksa dan bersihkan injektor, periksa tekanan pompa bahan bakar, scan ECU untuk kode error.'
+            diagnosis: 'Kemungkinan masalah pada sistem kelistrikan akibat terendam air.',
+            solution: 'Periksa sistem kelistrikan dan pastikan tidak ada kerusakan.'
         },
         {
             id: 'R2',
             conditions: {
-                indikator_injeksi: 'tidak',
-                mesin_sulit: 'ya',
-                bunyi_aneh: 'ya',
-                asap_knalpot: 'tidak',
-                mati_mendadak: 'ya'
+                terendam_air: 'ya',
+                lampu_mati: 'tidak',
+                suara_aneh: 'ya',
+                sulit_dinyalakan: 'tidak',
+                rem_licin: 'ya'
             },
-            diagnosis: 'Masalah pada sistem pengapian',
-            solution: 'Periksa busi, koil pengapian, dan sensor-sensor terkait.'
+            diagnosis: 'Kemungkinan masalah pada rem akibat terendam air.',
+            solution: 'Periksa dan bersihkan rem.'
         },
         {
             id: 'R3',
             conditions: {
-                indikator_injeksi: 'tidak',
-                mesin_sulit: 'tidak',
-                bunyi_aneh: 'ya',
-                asap_knalpot: 'ya',
-                mati_mendadak: 'tidak'
+                terendam_air: 'tidak',
+                lampu_mati: 'ya',
+                suara_aneh: 'tidak',
+                sulit_dinyalakan: 'ya',
+                rem_licin: 'tidak'
             },
-            diagnosis: 'Masalah pada sistem mekanis mesin',
-            solution: 'Periksa komponen mesin seperti klep, timing chain, dan piston.'
-        }
+            diagnosis: 'Masalah pada sistem pengapian.',
+            solution: 'Periksa busi dan sistem pengapian.'
+        },
+        {
+            id: 'R4',
+            conditions: {
+                terendam_air: 'tidak',
+                lampu_mati: 'tidak',
+                suara_aneh: 'ya',
+                sulit_dinyalakan: 'ya',
+                rem_licin: 'tidak'
+            },
+            diagnosis: 'Kemungkinan masalah pada mesin.',
+            solution: 'Periksa komponen mesin seperti klep dan piston.'
+        },
+        {
+            id: 'R5',
+            conditions: {
+                terendam_air: 'tidak',
+                lampu_mati: 'tidak',
+                suara_aneh: 'tidak',
+                sulit_dinyalakan: 'ya',
+                rem_licin: 'ya'
+            },
+            diagnosis: 'Kemungkinan masalah pada sistem bahan bakar.',
+            solution: 'Periksa saluran bahan bakar dan filter.'
+        },
+        {
+            id: 'R6',
+            conditions: {
+                terendam_air: 'tidak',
+                lampu_mati: 'tidak',
+                suara_aneh: 'ya',
+                sulit_dinyalakan: 'tidak',
+                rem_licin: 'tidak'
+            },
+            diagnosis: 'Kemungkinan masalah pada sistem knalpot.',
+            solution: 'Periksa saluran knalpot.'
+        },
+        {
+            id: 'R7',
+            conditions: {
+                overheat: 'ya',
+                suara_berisik: 'tidak',
+                sulit_dinyalakan: 'ya',
+                debu: 'tidak',
+                oli_mengental: 'tidak'
+            },
+            diagnosis: 'Masalah pada sistem pendinginan.',
+            solution: 'Periksa radiator dan sistem pendinginan.'
+        },
+        {
+            id: 'R8',
+            conditions: {
+                overheat: 'tidak',
+                suara_berisik: 'ya',
+                sulit_dinyalakan: 'tidak',
+                debu: 'ya',
+                oli_mengental: 'tidak'
+            },
+            diagnosis: 'Kemungkinan masalah pada komponen mesin.',
+            solution: 'Periksa komponen mesin dan pastikan tidak ada kerusakan.'
+        },
+        {
+            id: 'R9',
+            conditions: {
+                overheat: 'tidak',
+                suara_berisik: 'tidak',
+                sulit_dinyalakan: 'ya',
+                debu: 'tidak',
+                oli_mengental: 'ya'
+            },
+            diagnosis: 'Masalah pada oli mesin.',
+            solution: 'Ganti oli mesin dan periksa sistem pelumasan.'
+        },
+        {
+            id: 'R10',
+            conditions: {
+                overheat: 'tidak',
+                suara_berisik: 'tidak',
+                sulit_dinyalakan: 'tidak',
+                debu: 'ya',
+                oli_mengental: 'tidak'
+            },
+            diagnosis: 'Kemungkinan masalah pada filter udara.',
+            solution: 'Bersihkan atau ganti filter udara.'
+        },
+        // Tambahkan rules R11 hingga R50 sesuai dengan pertanyaan yang relevan
     ]
 };
 
