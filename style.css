@@ -1,28 +1,42 @@
-/* Gunakan flexbox untuk body agar footer selalu berada di bawah */
-body, html {
-    height: 100%;
-    margin: 0;
+/* style.css */
+
+/* Atur tampilan body */
+body {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Pastikan konten utama tumbuh untuk memenuhi ruang yang ada */
-.content {
-    flex-grow: 1;
+/* Section konten mendapatkan ruang fleksibel */
+.container {
+    flex: 1;
 }
 
-/* Atur footer agar berada di bawah halaman */
+/* Footer tetap berada di bagian bawah */
 footer {
-    background-color: #dc3545;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    width: 100%;
     margin-top: auto;
 }
 
-/* Atur tampilan untuk banner agar lebih menarik */
-.container.mt-5 img {
-    max-width: 100%;
-    height: auto;
+/* Judul */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600; /* Gunakan font tebal untuk judul */
+}
+
+/* Teks biasa */
+p, label, input, button {
+    font-weight: 400; /* Gunakan font reguler untuk teks biasa */
+}
+
+
+
+/* Jarak antar pertanyaan */
+.form-check {
+    margin-bottom: 1rem; /* Jarak antar pertanyaan */
+}
+
+/* Gaya untuk alert hasil analisis */
+.alert {
+    margin-top: 20px;
 }

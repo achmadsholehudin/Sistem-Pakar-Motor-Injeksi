@@ -1,4 +1,3 @@
-// Basis pengetahuan gejala dan masalah
 const knowledgeBase = {
     rules: [
         {
@@ -40,57 +39,80 @@ const knowledgeBase = {
     ]
 };
 
-// Fungsi untuk memulai konsultasi
+let questions = [];
+
 function startConsultation() {
-    document.querySelector('#question-section').style.display = 'block';
-    document.querySelector('.container.text-center').style.display = 'none';
+    document.querySelector('#welcome-section').style.display = 'none';
+    document.querySelector('#season-section').style.display = 'block';
 }
 
-// Fungsi analisis yang diperbaiki
+function selectSeason(season) {
+    document.querySelector('#season-section').style.display = 'none';
+    document.querySelector('#question-section').style.display = 'block';
+
+    if (season === 'hujan') {
+        questions = [
+            { question: "Motor sering terendam air saat hujan?", name: "terendam_air" },
+            { question: "Lampu motor sering mati saat hujan?", name: "lampu_mati" },
+            { question: "Suara aneh saat dinyalakan setelah hujan?", name: "suara_aneh" },
+            { question: "Motor sulit dinyalakan setelah hujan?", name: "sulit_dinyalakan" },
+            { question: "Rem motor terasa licin?", name: "rem_licin" }
+        ];
+    } else if (season === 'kemarau') {
+        questions = [
+            { question: "Motor sering overheat saat berkendara?", name: "overheat" },
+            { question: "Ada suara berisik dari mesin?", name: "suara_berisik" },
+            { question: "Motor sulit dinyalakan setelah lama?", name: "sulit_dinyalakan" },
+            { question: "Ada masalah debu masuk ke mesin?", name: "debu" },
+            { question: "Oli mesin mengental?", name: "oli_mengental" }
+        ];
+    }
+
+    showQuestions();
+}
+
+function showQuestions() {
+    const questionContainer = document.getElementById('question-container');
+    questionContainer.innerHTML = '';
+
+    questions.forEach((questionData) => {
+        const questionElement = document.createElement('div');
+        questionElement.classList.add('question-box', 'mb-3');
+        questionElement.innerHTML = `<h4>${questionData.question}</h4>`;
+
+        const answerContainer = document.createElement('div');
+        answerContainer.classList.add('option-container');
+
+        const yesBox = document.createElement('div');
+        yesBox.classList.add('option-box');
+        yesBox.innerHTML = `<input type="radio" id="ya-${questionData.name}" name="${questionData.name}" value="Ya" /> <label for="ya-${questionData.name}">Ya</label>`;
+        answerContainer.appendChild(yesBox);
+
+        const noBox = document.createElement('div');
+        noBox.classList.add('option-box');
+        noBox.innerHTML = `<input type="radio" id="tidak-${questionData.name}" name="${questionData.name}" value="Tidak" /> <label for="tidak-${questionData.name}">Tidak</label>`;
+        answerContainer.appendChild(noBox);
+
+        questionElement.appendChild(answerContainer);
+        questionContainer.appendChild(questionElement);
+    });
+}
+
 function analyze() {
-    // Validasi form
-    const form = document.querySelector('#consultationForm');
-    if (!isFormValid(form)) {
+    const formData = {};
+    const radioButtons = document.querySelectorAll('input[type="radio"]:checked');
+    
+    radioButtons.forEach(button => {
+        formData[button.name] = button.value;
+    });
+
+    if (Object.keys(formData).length !== questions.length) {
         alert('Mohon lengkapi semua pertanyaan!');
         return;
     }
 
-    // Mengambil semua nilai input
-    const formData = {
-        keluhan: document.querySelector('#keluhan').value,
-        indikator_injeksi: document.querySelector('input[name="indikator_injeksi"]:checked').value,
-        mesin_sulit: document.querySelector('input[name="mesin_sulit"]:checked').value,
-        bunyi_aneh: document.querySelector('input[name="bunyi_aneh"]:checked').value,
-        asap_knalpot: document.querySelector('input[name="asap_knalpot"]:checked').value,
-        mati_mendadak: document.querySelector('input[name="mati_mendadak"]:checked').value
-    };
-
-    // Mencari rule yang paling cocok
     let matchedRule = findBestMatch(formData);
-    
-    // Menampilkan hasil
-    displayResult(formData.keluhan, matchedRule);
-}
-
-// Fungsi untuk validasi form
-function isFormValid(form) {
-    const requiredInputs = form.querySelectorAll('input[required]');
-    const requiredRadios = {};
-
-    // Mengecek setiap input yang required
-    for (let input of requiredInputs) {
-        if (input.type === 'radio') {
-            requiredRadios[input.name] = requiredRadios[input.name] || false;
-            if (input.checked) {
-                requiredRadios[input.name] = true;
-            }
-        } else if (!input.value) {
-            return false;
-        }
-    }
-
-    // Mengecek apakah semua radio button yang required sudah dipilih
-    return Object.values(requiredRadios).every(checked => checked);
+    displayResult(matchedRule);
 }
 
 function findBestMatch(formData) {
@@ -121,14 +143,11 @@ function calculateMatchScore(formData, conditions) {
     return score / totalConditions;
 }
 
-function displayResult(keluhan, matchedRule) {
+function displayResult(matchedRule) {
     let resultHTML = '';
-    
+
     if (matchedRule) {
         resultHTML = `
-            <div class="mb-3">
-                <strong>Keluhan:</strong> ${keluhan}
-            </div>
             <div class="mb-3">
                 <strong>Diagnosis:</strong> ${matchedRule.diagnosis}
             </div>
@@ -138,9 +157,6 @@ function displayResult(keluhan, matchedRule) {
         `;
     } else {
         resultHTML = `
-            <div class="mb-3">
-                <strong>Keluhan:</strong> ${keluhan}
-            </div>
             <div class="mb-3">
                 <strong>Diagnosis:</strong> Tidak dapat menentukan masalah spesifik
             </div>
@@ -155,7 +171,6 @@ function displayResult(keluhan, matchedRule) {
     document.querySelector('#analysis-result').innerHTML = resultHTML;
 }
 
-// Fungsi reset
 function reset() {
     document.querySelector('#consultationForm').reset();
     document.querySelector('#question-section').style.display = 'none';

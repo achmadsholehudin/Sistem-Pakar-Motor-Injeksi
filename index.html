@@ -9,79 +9,103 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* CSS untuk menyembunyikan banner di halaman pertanyaan */
-        #banner {
-            display: block; /* Tampilkan banner secara default */
-        }
-        #question-section #banner {
-            display: none; /* Sembunyikan banner ketika berada di halaman pertanyaan */
-        }
         body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        margin: 0;
-    }
+            font-family: 'Poppins', sans-serif;
+        }
 
-    /* Section konten mendapatkan ruang fleksibel */
-    .container {
-        flex: 1;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    /* Footer tetap berada di bagian bawah */
-    footer {
-        margin-top: auto;
-    }
-      /* Import Google Font */
-      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        .question-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
 
-/* Atur font default */
-body {
-    font-family: 'Poppins', sans-serif;
-}
+        .question-box h4 {
+            font-size: 1.2rem;
+            color: #333;
+        }
 
-/* Tambahkan gaya khusus jika diperlukan */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 600; /* Gunakan font tebal untuk judul */
-}
+        .option-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
 
-p, label, input, button {
-    font-weight: 400; /* Gunakan font reguler untuk teks biasa */
-}
-button, input[type=button], input[type=reset], input[type=submit], .cs-button {
-    background: var(--cs-color-button, #6c5ce7); /* Warna latar tombol */
-    color: var(--cs-color-button-contrast, white); /* Warna teks */
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    border: none;
-    transition: 0.25s; /* Animasi transisi */
-    box-shadow: none;
-    overflow: hidden;
-    z-index: 1;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif; /* Font */
-    font-size: 1rem;
-    line-height: 1.5rem;
-    font-weight: 600;
-    font-style: normal;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 0.625rem 1.25rem;
-    border-radius: 10px; /* Sudut tombol */
-}
+        .option-box {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+        }
 
+        .option-box:hover {
+            background-color: #f8d7da;
+        }
+
+        .option-box.selected {
+            background-color: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        .option-box input[type="radio"] + label {
+            display: inline-block;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 10px;
+            margin-left: 10px;
+        }
+
+        .option-box input[type="radio"]:checked + label {
+            color: #dc3545;
+        }
+
+        /* Button Styling */
+        button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #c82333;
+        }
+
+        @media (max-width: 768px) {
+            .option-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .option-box {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Banner -->
-    <!-- <div id="banner" class="bg-warning text-center p-3">
-        <h2>Diskon 20% untuk layanan servis motor injeksi bulan ini!</h2>
-    </div> -->
-
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
         <div class="container">
             <a class="navbar-brand" href="#">
@@ -91,8 +115,7 @@ button, input[type=button], input[type=reset], input[type=submit], .cs-button {
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="container text-center mt-5">
+    <div class="container text-center mt-5" id="welcome-section">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="text-danger">Selamat Datang di Sistem Pakar Motor Injeksi</h1>
@@ -102,158 +125,28 @@ button, input[type=button], input[type=reset], input[type=submit], .cs-button {
         </div>
     </div>
 
-   <!-- Form Pertanyaan -->
-   <div class="container mt-5" id="question-section" style="display:none;">
-       <h2 class="text-center text-danger">Jawab Pertanyaan Berikut</h2>
-       <form id="consultationForm" class="mt-4">
-           <div class="mb-3">
-               <label for="keluhan" class="form-label">Apa keluhan utama motor Anda?</label>
-               <input type="text" class="form-control" id="keluhan" name="keluhan" placeholder="Masukkan keluhan utama motor Anda" required>
-           </div>
+    <div class="container mt-5" id="season-section" style="display:none;">
+        <h2 class="text-center text-danger">Pilih Musim</h2>
+        <div class="option-container mb-3">
+            <div class="option-box" onclick="selectSeason('hujan')">
+                <h4>Musim Hujan</h4>
+            </div>
+            <div class="option-box" onclick="selectSeason('kemarau')">
+                <h4>Musim Kemarau</h4>
+            </div>
+        </div>
+    </div>
 
-           <!-- Pertanyaan Dasar -->
-           <div class="mb-3">
-               <label class="form-label">Apakah lampu indikator injeksi (MIL/Check Engine) menyala?</label>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="indikator_injeksi" value="ya" required>
-                   <label class="form-check-label">Ya</label>
-               </div>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="indikator_injeksi" value="tidak" required>
-                   <label class="form-check-label">Tidak</label>
-               </div>
-           </div>
+    <div class="container mt-5" id="question-section" style="display:none;">
+        <h2 class="text-center text-danger">Jawab Pertanyaan Berikut</h2>
+        <form id="consultationForm">
+            <div id="question-container" class="question-container"></div>
+        </form>
+        <div class="text-center">
+            <button class=" btn btn-danger mt-3" onclick="analyze()">Kirim Jawaban</button>
+        </div>
+    </div>
 
-           <div class="mb-3">
-               <label class="form-label">Apakah mesin sulit dinyalakan?</label>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="mesin_sulit" value="ya" required>
-                   <label class="form-check-label">Ya</label>
-               </div>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="mesin_sulit" value="tidak" required>
-                   <label class="form-check-label">Tidak</label>
-               </div>
-           </div>
-
-           <!-- Pertanyaan tentang Performa -->
-           <div class="mb-3">
-               <label class="form-label">Apakah akselerasi motor terasa lambat/berat?</label>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="akselerasi_berat" value="ya" required>
-                   <label class="form-check-label">Ya</label>
-               </div>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="akselerasi_berat" value="tidak" required>
-                   <label class="form-check-label">Tidak</label>
-               </div>
-           </div>
-
-           <div class="mb-3">
-               <label class="form-label">Apakah konsumsi bahan bakar lebih boros dari biasanya?</label>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="boros_bbm" value="ya" required>
-                   <label class="form-check-label">Ya</label>
-               </div>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="boros_bbm" value="tidak" required>
-                   <label class="form-check-label">Tidak</label>
-               </div>
-           </div>
-
-           <!-- Pertanyaan tentang Suara dan Getaran -->
-           <div class="mb-3">
-               <label class="form-label">Apakah ada bunyi aneh dari mesin?</label>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="bunyi_aneh" value="ya" required>
-                   <label class="form-check-label">Ya</label>
-               </div>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="bunyi_aneh" value="tidak" required>
-                   <label class="form-check-label">Tidak</label>
-               </div>
-           </div>
-
-           <div class="mb-3">
-               <label class="form-label">Apakah ada getaran tidak normal saat motor berjalan?</label>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="getaran_abnormal" value="ya" required>
-                   <label class="form-check-label">Ya</label>
-               </div>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="getaran_abnormal" value="tidak" required>
-                   <label class="form-check-label">Tidak</label>
-               </div>
-           </div>
-
-           <!-- Pertanyaan tentang Gas Buang -->
-           <div class="mb-3">
-               <label class="form-label">Apakah ada asap berlebih dari knalpot?</label>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="asap_knalpot" value="ya" required>
-                   <label class="form-check-label">Ya</label>
-               </div>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="asap_knalpot" value="tidak" required>
-                   <label class="form-check-label">Tidak</label>
-               </div>
-           </div>
-
-           <div class="mb-3">
-               <label class="form-label">Apakah warna asap knalpot tidak normal?</label>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="warna_asap" value="ya" required>
-                   <label class="form-check-label">Ya</label>
-               </div>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="warna_asap" value="tidak" required>
-                   <label class="form-check-label">Tidak</label>
-               </div>
-           </div>
-
-           <!-- Pertanyaan tentang Kelistrikan -->
-           <div class="mb-3">
-               <label class="form-label">Apakah motor sering mati mendadak saat berjalan?</label>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="mati_mendadak" value="ya" required>
-                   <label class="form-check-label">Ya</label>
-               </div>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="mati_mendadak" value="tidak" required>
-                   <label class="form-check-label">Tidak</label>
-               </div>
-           </div>
-
-           <div class="mb-3">
-               <label class="form-label">Apakah ada masalah dengan kelistrikan lain? (lampu, klakson, dll)</label>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="masalah_listrik" value="ya" required>
-                   <label class="form-check-label">Ya</label>
-               </div>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="masalah_listrik" value="tidak" required>
-                   <label class="form-check-label">Tidak</label>
-               </div>
-           </div>
-
-           <!-- Pertanyaan Tambahan -->
-           <div class="mb-3">
-               <label class="form-label">Apakah ada masalah dengan sistem pendingin motor?</label>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="masalah_pendingin" value="ya" required>
-                   <label class="form-check-label">Ya</label>
-               </div>
-               <div class="form-check">
-                   <input class="form-check-input" type="radio" name="masalah_pendingin" value="tidak" required>
-                   <label class="form-check-label">Tidak</label>
-               </div>
-           </div>
-
-           <button type="button" class="btn btn-danger" onclick="analyze()">Submit Jawaban</button>
-       </form>
-   </div>
-
-    <!-- Hasil Analisis -->
     <div class="container mt-5" id="result-section" style="display:none;">
         <h2 class="text-center text-danger">Hasil Analisis</h2>
         <div class="alert alert-info" role="alert" id="analysis-result"></div>
@@ -262,7 +155,6 @@ button, input[type=button], input[type=reset], input[type=submit], .cs-button {
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="bg-danger text-white text-center py-3 mt-5">
         <p>&copy; 2024 Sistem Pakar Motor Injeksi - TI22AB</p>
     </footer>
